@@ -1,0 +1,6 @@
+# Proprietary data that I shouldn't share publically
+/Multi-Stage Signal Analyzer/DATA/hidden_data/*
+/Multi-Stage Signal Analyzer/Signal_Analyzer_Proprietary_Again.m
+
+# Temp Files
+*~
