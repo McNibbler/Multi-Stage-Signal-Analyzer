@@ -24,6 +24,7 @@ addpath(genpath(pwd));
 dataFile1 = '\DATA\anonymous data 1.xlsx';
 dataFile2 = '\DATA\anonymous data 2.xlsx';
 
+
 % Reads time from source excel spreadsheet (all signals should use same
 % time intervals)
 t = xlsread(dataFile1, 'A:A');
@@ -40,11 +41,11 @@ width = 14; %i.e. width = 5 means graphs will show up to 5x the FF in the x axis
 
 %% Preparing Gathered Data %%
 
-% Number of samples (4096 from AudioPrecision over 0.064 seconds)
+% Number of samples
 npts = length(t);
 
 % converts to frequency domain
-f = fftaxis(t);             % x-Axis
+f = fftaxis(t);                         % x-Axis
 fShift = fftaxisshift(fftaxis(t));      % x-axis shifted over y-axis
 
 df = (t(2) - t(1)) * npts; 
@@ -61,17 +62,15 @@ Fdata2Shift = fftshift(Fdata2);
 
 % finds appropriate range for displaying the fourier transform to
 %-- make relevant data more visible
-%-- testingFrequency should be exactly 1008Hz in this situation
-[~, maxIndex] = max(abs(Fdata1));     % to find where the biggest spike in the FFT resides (in case of sine wave, the first harmonic)
+[~, maxIndex] = max(abs(Fdata1));                   	% to find where the biggest spike in the FFT resides (in case of sine wave, the first harmonic)
 testingFrequency = f(maxIndex);
-test = find(abs(f)<width*testingFrequency);    % creates a range for where data is most relevant
+test = find(abs(f)<width*testingFrequency);             % creates a range for where data is most relevant
 testShift = find(abs(fShift)<width*testingFrequency);
 
 fundamentalFreq = testingFrequency;
 
 % Number of steps between harmonics
 increment = maxIndex - 1;
-
 
 % Calculates phases at fundamental frequency
 phase1 = phaseCalc(Fdata1, maxIndex);
@@ -96,6 +95,10 @@ maxIndicies = maxIndex:increment:10*increment;
 
 % Gain at the first fundamental frequency
 gain = abs(data2HarmonicAmplitudes(1) ./ data1HarmonicAmplitudes(1));
+
+% THD both
+data1THD = thd(data1, npts/max(t), 5);
+data2THD = thd(data2, npts/max(t), 5);
 
 % Resultant error vectors of distortion between stages
 resultants = Fdata2Adjusted./gain - Fdata1Adjusted;
@@ -195,7 +198,7 @@ string2 = strcat('M:',num2str(abs(Fdata2Adjusted(steps*increment + 1))),' P:',nu
 subplot(2,2,1);
 dbFftPlot(f(test),Fdata1Adjusted(test));
 ylim(limits);
-title(['Input Signal FFT (dBV), Frequency Domain (Shifted ', num2str(phase1), '°)']);
+title(['Input Signal FFT (dBV), Frequency Domain (Shifted ', num2str(phase1), '°), THD: ', num2str(data1THD)]);
 text(xText,data1YText, labels, 'fontsize', 20, 'Color', [.8 .2 .2]);
 legend(string1);
 legend('boxoff');
@@ -203,7 +206,7 @@ legend('boxoff');
 subplot(2,2,2);
 dbFftPlot(f(test),Fdata2Adjusted(test));
 ylim(limits);
-title(['Output Signal FFT (dBV), Frequency Domain (Shifted ', num2str(phase2), '°), Gain = ', num2str(gain)]);
+title(['Output Signal FFT (dBV), Frequency Domain (Shifted ', num2str(phase2), '°), Gain = ', num2str(gain), ', THD: ', num2str(data2THD)]);
 text(xText,data2YText, labels, 'fontsize', 20, 'Color', [.8 .2 .2]);
 legend(string2);
 legend('boxoff');
