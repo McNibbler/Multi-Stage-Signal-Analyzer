@@ -121,9 +121,9 @@ finalSum(3) = sum(checker3 - Fdata2Adjusted);
 
 % Checks that transfer test is successful under a tolerance of -250dB
 if todb(finalSum) < -250
-    fprintf("Test passed\n\n");
+    fprintf('Test passed\n\n');
 else
-    fprintf("Test failed\n\n");
+    fprintf('Test failed\n\n');
 end
 
 %% First plot %%
@@ -312,7 +312,7 @@ ampFirstHarmonic2 = abs(Fdata2(maxIndex));
 THD1 = thd(data1, npts/max(t), 5);
 THD2 = thd(data2, npts/max(t), 5);
 
-fprintf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n")
+fprintf('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n')
 fprintf('INPUT DATA RESULTS\n\n')
 fprintf('Frequency of measured first harmonic = %f\n\n', testingFrequency)
 fprintf('Output Signal\nV(max) = %f, V(min) = %f\n\n', maximum1, minimum1)
@@ -331,10 +331,10 @@ fprintf('Total harmonic distortion = %f\n\n', THD2)
 
 %% Restultant Results %%
 
-fprintf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n")
-fprintf("Resultant Vector\n\n")
-fprintf("\t\tFF\t\t\t\t\t\t\t2\t\t\t\t\t\t\t3\t\t\t\t\t\t\t4\t\t\t\t\t\t\t5\n")
-fprintf("Result:\t%f + %fj\t\t%f + %fj\t\t%f + %fj\t\t%f + %fj\t\t%f + %fj\n",real(resultants(increment+1)),imag(resultants(increment+1)),...
+fprintf('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n')
+fprintf('Resultant Vector\n\n')
+fprintf('\t\tFF\t\t\t\t\t\t\t2\t\t\t\t\t\t\t3\t\t\t\t\t\t\t4\t\t\t\t\t\t\t5\n')
+fprintf('Result:\t%f + %fj\t\t%f + %fj\t\t%f + %fj\t\t%f + %fj\t\t%f + %fj\n',real(resultants(increment+1)),imag(resultants(increment+1)),...
     real(resultants(increment*2+1)),imag(resultants(increment*2+1)),real(resultants(increment*3+1)),imag(resultants(increment*3+1)),...
     real(resultants(increment*4+1)),imag(resultants(increment*4+1)),real(resultants(increment*5+1)),imag(resultants(increment*5+1)));
 
